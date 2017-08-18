@@ -1,0 +1,16 @@
+It is a very good start.
+
+Some suggestions:
+- Need to understand camel-casing. what you have presented is not camel-casing for naming conventions.
+- Variables need to be given some access modifiers. Don't just rely on default. 
+Shows that you have a undertanding of access control.
+- TestNG concept is not what you have presented here. Need to revisit the concept. TestNG is an xml file and not a .java file.
+Your .java file is your testplan which has different tests for certain functionalities.
+
+Next Iteration changes:
+- Make the current TestNG.java file shorter. See if you can identify some lines of code which can be used by multiple tests.
+And make them functions in another classes.
+- Current implementation of Page.java has both locators and functions hardcoded in one.
+Make them separate in two different classes. Page inheriting locators.
+- Data provider should be able to provide you object as a whole rather than individual parameters like you have.
+This will make the signature of your test functions shorter.
