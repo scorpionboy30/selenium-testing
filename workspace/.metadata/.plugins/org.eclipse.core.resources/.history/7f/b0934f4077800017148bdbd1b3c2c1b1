@@ -1,0 +1,11 @@
+package helpers;
+
+import org.openqa.selenium.WebElement;
+
+public class Locator {
+	
+	public static WebElement getElementById(String id) {
+		return null;
+	}
+
+}

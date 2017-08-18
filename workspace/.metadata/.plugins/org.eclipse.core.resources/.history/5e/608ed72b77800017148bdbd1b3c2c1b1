@@ -1,0 +1,9 @@
+package helpers;
+
+public class Locator {
+	
+	public static WebElement getElementById(String id) {
+		
+	}
+
+}

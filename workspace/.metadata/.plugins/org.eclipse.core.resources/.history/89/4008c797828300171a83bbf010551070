@@ -1,0 +1,95 @@
+package expedia.pages;
+
+import helpers.Locator;
+//import helpers.Operation;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class CreateAccountPage {
+	WebDriver dRiver;
+	WebElement fName;
+	WebElement lName;
+	WebElement eMail;
+	WebElement passWord;
+	WebElement confirmPwd;
+	WebElement termandCond;
+	WebElement policycheckBox;
+	WebElement submitButton;
+	WebElement allEmpty;
+	WebElement passwordLength;
+	WebElement termsAndConditions;
+	WebElement passwordMismatch;
+	WebElement createFreeAccountText;
+	WebElement faceBookButton;
+	
+	public CreateAccountPage(WebDriver driver) {
+		this.dRiver = driver;
+	}
+	public WebElement createFreeAccountTextDefault(){
+		createFreeAccountText = Locator.getByXPath(dRiver, ".//*[@id='page-header']/h1");
+		return createFreeAccountText;
+	}
+	public  WebElement getFname() {
+		fName = Locator.getById(dRiver,"create-account-firstname");
+		return fName;
+	}
+	
+	public WebElement getLname() {
+		lName = Locator.getById(dRiver,"create-account-lastname");
+		return lName;
+	}
+	public WebElement getEmail(){
+		eMail = Locator.getByXPath(dRiver,".//*[@id='create-account-emailId']");
+		return eMail;
+		}
+	public WebElement getPassword(){
+		passWord = Locator.getById(dRiver,"create-account-password");
+		return passWord;
+		}
+	
+	public WebElement getCPassword(){
+		confirmPwd = Locator.getById(dRiver,"create-account-confirm-password");
+		return confirmPwd;
+		}
+	public WebElement getclickTandC(){
+		termandCond = Locator.getByXPath(dRiver,".//*[@id='expedia-rewards-opt']/fieldset/div/input");
+		return termandCond;
+	}
+	
+	public WebElement getclickPolicyCheckBox(){
+		policycheckBox = Locator.getByXPath(dRiver, ".//*[@id='create-account-expedia-policy']");
+		return policycheckBox;
+	}
+	public WebElement getSubmitButton(){
+		submitButton = Locator.getByXPath(dRiver,".//*[@id='create-account-submit-button']");
+		return submitButton;
+		}
+	
+	public WebElement allEmptyMessage(){
+		allEmpty = Locator.getByXPath(dRiver,".//*[@id='blank-create-param-id']/h5");
+		return allEmpty;
+	}
+	
+	public WebElement passwordLengthMessage(){
+		passwordLength = Locator.getByXPath(dRiver, ".//*[@id='pass-length-id']/h5");
+		return passwordLength;
+	}
+	
+	public WebElement passwordMismatchMessage(){
+		passwordMismatch = Locator.getByXPath(dRiver,".//*[@id='pass-mismatch-id']");
+		return passwordMismatch;
+	}
+	
+	public WebElement termsAndConditionsMessage(){
+		termsAndConditions = Locator.getByXPath(dRiver, ".//*[@id='term-and-conditions-id']");
+		return termsAndConditions;
+	}
+	
+	public WebElement facebookButton() {
+		faceBookButton = Locator.getByXPath(dRiver, ".//*[@id='e3createaccont-facebook-button']");
+		return faceBookButton;
+	}
+	
+	
+}

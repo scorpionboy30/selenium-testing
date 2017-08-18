@@ -1,0 +1,62 @@
+package expedia.pages;
+
+import helpers.Locator;
+import helpers.Operation;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class CreateAccountPage {
+	WebDriver dRiver;
+	WebElement fName;
+	WebElement lName;
+	WebElement eMail;
+	WebElement passWord;
+	WebElement confirmPwd;
+	WebElement termandCond;
+	WebElement submitButton;
+	String firstName;
+	String lastName;
+	String email;
+	String password;
+	String cpassword;
+	
+	public CreateAccountPage(WebDriver driver,String firstName,String lastName,String email,String password,String cpassword) {
+		this.dRiver = driver;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.cpassword = cpassword;
+	}
+	
+	public void getFname() {
+		fName = Locator.getById(dRiver,"create-account-firstname");
+		Operation.sendKeys(fName,firstName);
+	}
+	
+	public void getLname() {
+		lName = Locator.getById(dRiver,"create-account-lastname");
+		Operation.sendKeys(lName,lastName);
+	}
+	public void getEmail(){
+		eMail = Locator.getByXPath(dRiver,".//*[@id='create-account-emailId']");
+		Operation.sendKeys(eMail, email);
+		}
+	public void getPassword(){
+		passWord = Locator.getById(dRiver,"create-account-password");
+		Operation.sendKeys(passWord, password);
+		}
+	
+	public void getCPassword(){
+		confirmPwd = Locator.getById(dRiver,"create-account-confirm-password");
+		Operation.sendKeys(confirmPwd, cpassword);
+		}
+	public void clickTandC(){
+		termandCond = Locator.getByXPath(dRiver,".//*[@id='expedia-rewards-opt']/fieldset/div/input");
+	}
+	public void getSearchButton(){
+		submitButton = Locator.getById(dRiver,"create-account-submit-button");
+		Operation.clickButton(submitButton);
+		}
+}

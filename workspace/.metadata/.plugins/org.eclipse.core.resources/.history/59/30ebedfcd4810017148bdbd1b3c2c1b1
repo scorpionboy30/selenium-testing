@@ -1,0 +1,100 @@
+package expedia.pages;
+
+import helpers.Locator;
+import helpers.Operation;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class CreateAccountPage {
+	WebDriver dRiver;
+	WebElement fName;
+	WebElement lName;
+	WebElement eMail;
+	WebElement passWord;
+	WebElement confirmPwd;
+	WebElement termandCond;
+	WebElement policycheckBox;
+	WebElement submitButton;
+	WebElement allEmpty;
+	WebElement passwordLength;
+	WebElement termsAndConditions;
+	WebElement passwordMismatch;
+	String firstName;
+	String lastName;
+	String email;
+	String password;
+	String cpassword;
+	
+	public CreateAccountPage(WebDriver driver) {
+		this.dRiver = driver;
+//		this.firstName = firstName; ,String firstName,String lastName,String email,String password,String cpassword
+	//	this.lastName = lastName;
+	//	this.email = email;
+	//	this.password = password;
+	//	this.cpassword = cpassword;
+	}
+	
+	public  WebElement getFname() {
+		fName = Locator.getById(dRiver,"create-account-firstname");
+		return fName;
+	}
+	
+	public WebElement getLname() {
+		lName = Locator.getById(dRiver,"create-account-lastname");
+		return lName;
+	}
+	public WebElement getEmail(){
+		eMail = Locator.getByXPath(dRiver,".//*[@id='create-account-emailId']");
+		return eMail;
+		}
+	public void getPassword(){
+		passWord = Locator.getById(dRiver,"create-account-password");
+		Operation.sendKeys(passWord, password);
+		}
+	
+	public void getCPassword(){
+		//Locator.getById(dRiver,"create-account-confirm-password").sendKeys(cpassword);
+		confirmPwd = Locator.getById(dRiver,"create-account-confirm-password");
+		Operation.sendKeys(confirmPwd, cpassword);
+		}
+	public void clickTandC(){
+		//Locator.getByXPath(dRiver,".//*[@id='expedia-rewards-opt']/fieldset/div/input").click();
+		termandCond = Locator.getByXPath(dRiver,".//*[@id='expedia-rewards-opt']/fieldset/div/input");
+		termandCond.click();
+	}
+	
+	public void clickPolicyCheckBox(){
+		policycheckBox = Locator.getByXPath(dRiver, ".//*[@id='create-account-expedia-policy']");
+		policycheckBox.click();
+		//Operation.clickButton(policycheckBox);
+	}
+	public void getSearchButton(){
+		submitButton = Locator.getByXPath(dRiver,".//*[@id='create-account-submit-button']");
+		Operation.clickButton(submitButton);
+		}
+	
+	public boolean allEmptyMessage(){
+		allEmpty = Locator.getByXPath(dRiver,".//*[@id='blank-create-param-id']");
+		boolean isMessageDisplayed =  allEmpty.isDisplayed();
+		return isMessageDisplayed;
+	}
+	
+	public boolean passwordLengthMessage(){
+		passwordLength = Locator.getByXPath(dRiver, ".//*[@id='pass-length-id']");
+		boolean ispasswordLengthMessage = passwordLength.isDisplayed();
+		return ispasswordLengthMessage;
+	}
+	
+	public boolean termsAndConditionsMessage(){
+		termsAndConditions = Locator.getByXPath(dRiver, ".//*[@id='term-and-conditions-id']");
+		boolean tAndC = termsAndConditions.isDisplayed();
+		return tAndC;
+	}
+	
+	public boolean passwordMismatchMessage(){
+		passwordMismatch = Locator.getByXPath(dRiver,".//*[@id='pass-mismatch-id']");
+		boolean misMatchMessage = passwordMismatch.isDisplayed();
+		return misMatchMessage;
+	}
+}

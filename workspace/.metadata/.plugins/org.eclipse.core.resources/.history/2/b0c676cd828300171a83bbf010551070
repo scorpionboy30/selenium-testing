@@ -1,0 +1,105 @@
+package testng;
+import expedia.pages.*;
+import helpers.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Set;
+
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+
+
+public class TestNG {
+	
+	@Test(dataProvider = "inputData")
+	public void readInputData(String fName, String lName, String email, String pwd, String cPwd,String allEmpty,String expectedallEmptyTextMessage,
+			String pwdmismatch,String pwdmismatchMessage,String pwdlessThaneigth,String pwdlengthMessage,String expecteddefaultmessageCAP,String testFBPageButton)throws InterruptedException {
+			System.setProperty("webdriver.gecko.driver", "/Users/ratikasally/Selenium/geckodriver");
+			WebDriver driver = new FirefoxDriver();
+			driver.get("https://www.expedia.com/user/createaccount?fromheader=true");
+			boolean expectedEmpty = Boolean.parseBoolean(allEmpty);
+			boolean expectedmismatch = Boolean.parseBoolean(pwdmismatch);
+			boolean expectedpwdlengtherror = Boolean.parseBoolean(pwdlessThaneigth);
+			boolean testFBPageButtonValue = Boolean.parseBoolean(testFBPageButton);
+			CreateAccountPage accountPage = new CreateAccountPage(driver);
+			Operation.sendKeys(accountPage.getFname(), fName);
+			Operation.sendKeys(accountPage.getLname(), lName);
+			Operation.sendKeys(accountPage.getEmail(), email);	
+			Operation.sendKeys(accountPage.getPassword(), pwd);
+			Operation.sendKeys(accountPage.getCPassword(), cPwd);	
+			Operation.clickButton(accountPage.getclickTandC());
+			Operation.clickButton(accountPage.getclickPolicyCheckBox());
+			Operation.clickButton(accountPage.getSubmitButton());
+			if(expectedEmpty == true) {
+			System.out.println(Operation.getText(accountPage.allEmptyMessage()));
+			}
+			//Verification Point to Check if error message is displayed and correct message is displayed when all elements are null
+			Assert.assertEquals(expectedEmpty,Operation.isDisplayed(accountPage.allEmptyMessage()));	
+			if(expectedEmpty == true) {
+				Assert.assertEquals("Please complete all fields.", Operation.getText(accountPage.allEmptyMessage()));
+			}
+			//Verification Point to Check if password is less than 8 char message is displayed and correct message is displayed
+			Assert.assertEquals(expectedpwdlengtherror, Operation.isDisplayed(accountPage.passwordLengthMessage()));
+			if(expectedpwdlengtherror == true) {
+				Assert.assertEquals("Password must be at least 8 characters.", Operation.getText(accountPage.passwordLengthMessage()));
+			}
+			//Verification Point to Check if Passwords do not match - Check if message is displayed and if correct message is displayed
+			Assert.assertEquals(expectedmismatch, Operation.isDisplayed(accountPage.passwordMismatchMessage()));
+		//	Assert.assertEquals(pwdmismatchMessage, Operation.getText(accountPage.passwordMismatchMessage()));
+	
+			//Testing FaceBook Sign up Button
+			if(testFBPageButtonValue == true) {
+				String windowHandle = driver.getWindowHandle();
+				Operation.clickButton(accountPage.facebookButton());
+				Set<String> handles = driver.getWindowHandles();
+				for(String handle:handles) {
+					driver.switchTo().window(handle);
+					String uRL = driver.getCurrentUrl();
+					if(uRL.contains("https://www.facebook.com/login")) {
+						System.out.println("Navigating to the FaceBook SignUp Page - Passed");
+					}
+				}
+				driver.switchTo().window(windowHandle);
+				System.out.println(driver.getTitle());
+				//driver.quit();
+				
+			}
+			//Verification Point to Check if Terms&Conditions Error message if displayed and correct message is displayed when user does not select that checkbox
+			//Assert.assertEquals(termsandCondition, Operation.isDisplayed(accountPage.termsAndConditionsMessage()));
+			//Assert.assertEquals(termsandConditionMessage,Operation.getText(accountPage.termsAndConditionsMessage()));
+	
+			//Verification Point to check default messages
+			//Assert.assertEquals(expecteddefaultmessageCAP,accountPage.createFreeAccountTextDefault().getText());
+		}
+	
+		@DataProvider(name = "inputData")
+		public Object[][] getInputData() throws BiffException, IOException {
+			File file = new File("/Users/ratikasally/Downloads/TestData.xls");
+			Workbook myBook = Workbook.getWorkbook(file);
+			Sheet mySheet = myBook.getSheet("Sheet1");
+			int rows = mySheet.getRows();
+			int columns = mySheet.getColumns();
+			System.out.println(rows);
+			System.out.println(columns);
+			String[][] inputData = new String[rows-2][columns-1];
+			for(int i = 1; i < rows-1; i++) {
+				for(int j = 0; j < columns-1; j++) {
+					Cell myCell = mySheet.getCell(j,i);
+					inputData[i-1][j] = myCell.getContents();
+				}
+			}
+			return inputData;
+		}
+
+	}

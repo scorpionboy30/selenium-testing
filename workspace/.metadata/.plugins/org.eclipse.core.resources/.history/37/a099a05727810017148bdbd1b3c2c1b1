@@ -1,0 +1,27 @@
+package helpers;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class Locator {
+	
+	//private static WebDriver driver;
+	
+//	public Locator(WebDriver driver) {
+//		Locator.driver = driver;
+//	}
+
+	public static WebElement getById(WebDriver driver,String id) {
+		return driver.findElement(By.id(id));
+	}
+	
+	public static WebElement getByXPath(WebDriver driver,String xPath) {
+		return driver.findElement(By.xpath(xPath));
+	//	return findElement(By.xpath(xPath));
+	}
+	
+	/*private static WebElement findElement(By func) {
+		return driver.findElement(func);
+	}*/
+}
